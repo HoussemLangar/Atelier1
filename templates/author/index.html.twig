@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des auteurs{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Liste des auteurs</h1>
+
+    <a href="{{ path('author_new') }}" class="btn">Ajouter un nouvel auteur</a>
+    <a href="{{ path('book_index') }}" class="btn" style="background-color: #2ecc71;">Liste des livres</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Nombre de livres</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nbBooks }}</td>
+                    <td class="action-links">
+                        <a href="{{ path('author_edit', {'id': author.id}) }}">Edit</a>
+                        <a href="{{ path('author_delete', {'id': author.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cet auteur ?')">Delete</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun auteur trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du livre{% endblock %}
+
+{% block body %}
+<h1>Détails du livre</h1>
+
+<p><strong>ID :</strong> {{ book.id }}</p>
+<p><strong>Titre :</strong> {{ book.title }}</p>
+<p><strong>Catégorie :</strong> {{ book.category }}</p>
+<p><strong>Auteur :</strong> {{ book.author.name }}</p>
+<p><strong>Publié :</strong> {{ book.published ? 'Oui' : 'Non' }}</p>
+
+<a href="{{ path('book_index') }}">Retour à la liste</a>
+{% endblock %}

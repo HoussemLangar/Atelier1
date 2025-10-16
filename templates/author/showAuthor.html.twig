@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails auteur{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="details-card">
+        <img src="{{ author.picture ?? '/images/default-avatar.png' }}" alt="{{ author.name }}">
+        <h2>{{ author.name }}</h2>
+        <p><strong>ID :</strong> {{ author.id }}</p>
+        <p><strong>Email :</strong> {{ author.email }}</p>
+        <p><strong>Nombre de livres :</strong> {{ author.nbBooks }}</p>
+    </div>
+
+    <a href="{{ path('author_index') }}" class="back-link">Retour à la liste</a>
+</div>
+{% endblock %}
