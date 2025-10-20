@@ -14,7 +14,7 @@
                     <h2>{{ author.username|upper }}</h2>
                     <p>{{ author.email }}</p>
                     <p>📚 {{ author.nb_books }} livres</p>
-                    <a href="{{ path('app_author_details', {'id': author.id}) }}" class="btn">Détails</a>
+                    <a href="{{ path('author_show', {'id': author.id}) }}" class="btn">Détails</a>
                 </div>
             {% endfor %}
         </div>

@@ -26,6 +26,27 @@ class Book
     #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $publishedAt = null;
+
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTime();
+    }
+
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(?\DateTimeInterface $publishedAt = null): static
+    {
+        $this->publishedAt = $publishedAt ?? new \DateTime();
+        return $this;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -10,19 +10,19 @@ use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Author;
 use App\Form\AuthorType;
+use App\Repository\BookRepository;
 
 class AuthorController extends AbstractController
 {
-
-    #[Route('/author', name: 'author_index')]
+    #[Route('/authors', name: 'author_index')]
     public function index(AuthorRepository $repo): Response
     {
         return $this->render('author/index.html.twig', [
-            'authors' => $repo->findAll()
+            'authors' => $repo->findAll(),
         ]);
     }
 
-   #[Route('/author/new', name: 'author_new')]
+    #[Route('/author/new', name: 'author_new')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $author = new Author();
@@ -32,11 +32,12 @@ class AuthorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($author);
             $em->flush();
+
             return $this->redirectToRoute('author_index');
         }
 
         return $this->render('author/new.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -52,7 +53,8 @@ class AuthorController extends AbstractController
         }
 
         return $this->render('author/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'author' => $author,
         ]);
     }
 
@@ -61,7 +63,19 @@ class AuthorController extends AbstractController
     {
         $em->remove($author);
         $em->flush();
+
         return $this->redirectToRoute('author_index');
     }
 
+    #[Route('/author/{id}', name: 'author_show')]
+    public function show(Author $author, BookRepository $bookRepository): Response
+    {
+        $books = $bookRepository->findBooksByAuthorSortDateDQL($author);
+        //$books = $bookRepository->findBooksByAuthorSortDateQB($author);
+
+        return $this->render('author/showAuthor.html.twig', [
+            'author' => $author,
+            'books' => $books,
+        ]);
+    }
 }

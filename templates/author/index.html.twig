@@ -27,6 +27,7 @@
                     <td>{{ author.email }}</td>
                     <td>{{ author.nbBooks }}</td>
                     <td class="action-links">
+                        <a href="{{ path('author_show', {'id': author.id}) }}">Show</a>
                         <a href="{{ path('author_edit', {'id': author.id}) }}">Edit</a>
                         <a href="{{ path('author_delete', {'id': author.id}) }}" onclick="return confirm('Voulez-vous vraiment supprimer cet auteur ?')">Delete</a>
                     </td>

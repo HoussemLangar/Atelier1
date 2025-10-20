@@ -16,28 +16,33 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    //    /**
-    //     * @return Book[] Returns an array of Book objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Récupère les livres d’un auteur triés par date (DQL)
+     */
+    public function findBooksByAuthorSortDateDQL($author): array
+    {
+        $entityManager = $this->getEntityManager();
 
-    //    public function findOneBySomeField($value): ?Book
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $query = $entityManager->createQuery(
+            'SELECT b
+             FROM App\Entity\Book b
+             WHERE b.author = :author
+             ORDER BY b.publishedAt DESC'
+        )->setParameter('author', $author);
+
+        return $query->getResult();
+    }
+
+    /**
+     * Récupère les livres d’un auteur triés par date (QueryBuilder)
+     */
+    public function findBooksByAuthorSortDateQB($author): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.author = :author')
+            ->setParameter('author', $author)
+            ->orderBy('b.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
